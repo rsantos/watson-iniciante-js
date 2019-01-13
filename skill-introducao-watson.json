@@ -1,0 +1,272 @@
+{
+  "name": "introducao-watson",
+  "intents": [
+    {
+      "intent": "saudacao",
+      "examples": [
+        {
+          "text": "Bom dia"
+        },
+        {
+          "text": "Olá"
+        },
+        {
+          "text": "Tudo bem com você"
+        },
+        {
+          "text": "Boa tarde"
+        },
+        {
+          "text": "Oi"
+        },
+        {
+          "text": "Boa noite"
+        },
+        {
+          "text": "Fala ae, blz?"
+        }
+      ],
+      "description": "Saudação que o cliente pode enviar"
+    }
+  ],
+  "entities": [
+    {
+      "entity": "saudacao",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "boa tarde",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "oi",
+          "synonyms": [
+            "oii",
+            "olá"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "boa noite",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "bom dia",
+          "synonyms": [
+            "dia"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "language": "pt-br",
+  "metadata": {
+    "api_version": {
+      "major_version": "v1",
+      "minor_version": "2018-09-20"
+    }
+  },
+  "description": "",
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "finalizacao",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Em que posso ajudar?"
+              },
+              {
+                "text": "Em que posso ser útil?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "parent": "node_1_1547316449817",
+      "metadata": {},
+      "conditions": "#saudacao",
+      "dialog_node": "node_1_1547314499273",
+      "previous_sibling": "node_2_1547316631130"
+    },
+    {
+      "type": "standard",
+      "title": "saudacao-comum",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Olá, tudo bem?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1547316449817",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_1_1547314499273"
+      },
+      "conditions": "#saudacao",
+      "dialog_node": "node_2_1547316631130",
+      "previous_sibling": "node_2_1547316226597"
+    },
+    {
+      "type": "standard",
+      "title": "saudacao-boa-noite",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Boa noite"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1547316449817",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_1_1547314499273"
+      },
+      "conditions": "#saudacao && @saudacao:(boa noite)",
+      "dialog_node": "node_2_1547316226597",
+      "previous_sibling": "node_2_1547315594009"
+    },
+    {
+      "type": "standard",
+      "title": "saudacao-boa-tarde",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Boa tarde"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1547316449817",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_1_1547314499273"
+      },
+      "conditions": "#saudacao && @saudacao:(boa tarde)",
+      "dialog_node": "node_2_1547315594009",
+      "previous_sibling": "node_1_1547316080958"
+    },
+    {
+      "type": "standard",
+      "title": "saudacao-bom-dia",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Bom dia"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1547316449817",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_1_1547314499273"
+      },
+      "conditions": "#saudacao && @saudacao:(bom dia)",
+      "dialog_node": "node_1_1547316080958"
+    },
+    {
+      "type": "folder",
+      "title": "saudacao",
+      "metadata": {},
+      "conditions": "#saudacao",
+      "dialog_node": "node_1_1547316449817",
+      "previous_sibling": "Bem-vindo"
+    },
+    {
+      "type": "standard",
+      "title": "Em outros casos",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Eu não entendi. Você pode tentar reformular a frase."
+              },
+              {
+                "text": "Você pode reformular sua afirmação? Eu não estou entendendo."
+              },
+              {
+                "text": "Eu não entendi o sentido."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "anything_else",
+      "dialog_node": "Em outros casos",
+      "previous_sibling": "node_1_1547316449817"
+    },
+    {
+      "type": "standard",
+      "title": "Bem-vindo",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Olá. Como posso te ajudar?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "welcome",
+      "digress_in": "does_not_return",
+      "dialog_node": "Bem-vindo"
+    }
+  ],
+  "workspace_id": "e8f0af3a-6fac-472b-a242-e5c49786097b",
+  "counterexamples": [],
+  "system_settings": {
+    "tooling": {
+      "store_generic_responses": true
+    }
+  },
+  "learning_opt_out": false,
+  "status": "Available"
+}
